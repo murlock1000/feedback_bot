@@ -1,0 +1,107 @@
+# Welcome to the sample config file
+# Below you will find various config sections and options
+# Default values are shown
+
+# The string to prefix messages with to talk to the bot in group chats
+command_prefix: "!middleman"
+
+# Option for ignoring old messages in a room on startup
+ignore_old_messages: False
+
+# Options for connecting to the bot's Matrix account
+matrix:
+  # The Matrix User ID of the bot account
+  user_id: "@bot:example.com"
+  # Matrix account password (optional if access token used)
+  user_password: ""
+  # Matrix account access token (optional if password used)
+  # Please note, if you use an access token, you must ensure the token and device pair exists
+  # in the Matrix server database. For example for Synapse (replacing device id and user token):
+  #    insert into access_tokens (id, user_id, device_id, token) values (
+  #       (select max(id)+1 from access_tokens), '@bot:example.com', '<device id>', '<user_token>'
+  #    );
+  #user_token: ""
+  # The URL of the homeserver to connect to
+  homeserver_url: https://example.com
+  # The device ID that is **non pre-existing** device
+  # If this device ID already exists, messages will be dropped silently in encrypted rooms
+  device_id: ABCDEFGHIJ
+  # What to name the logged in device
+  device_name: middleman-bot
+
+middleman:
+  # Management room where proxied messages are sent and where actions are taken.
+  # Can be an alias or room ID. Middleman must be able to join it on startup.
+  management_room: "!1234567:example.com"
+  # Anonymous senders
+  # If set to true, relayed messages to management room will not contain
+  # any sender information.
+  anonymise_senders: false
+  # Welcome message which is sent to anyone inviting Middleman to a room.
+  # Comment out to disable sending any message.
+  welcome_message: |
+    Hello! I'm Middleman, a bot. I will relay your message forward to the maintainers of this
+    bot. When they reply, you will see the message here. Ps. Sorry, images are not currently
+    supported, text only please!
+  # Operate in "mentions only" for rooms that look like non-direct messages,
+  # This is based on the nio "is_named" logic, ie a room is a named room if it has
+  # 1) an alias or 2) a name. Direct messages often don't have names, they are
+  # generated dynamically based on the participants.
+  # When set to true, "mention_only_rooms" has no effect.
+  mention_only_always_for_named: false
+  # List of rooms to only relay messages from when explicitly mentioned
+  # Any rooms here (alias or ID) will have messages relayed to the management
+  # room only if the bot is mentioned in the message. This allows joining the bot
+  # to rooms with a large amount of messages for support needs, for example.
+  # When "mention_only_always_for_named" is set to true, this has no effect.
+  mention_only_rooms: []
+  # Reply confirmation with reaction (Optional)
+  confirm_reaction:
+    enabled: false
+    # Success confirmation reaction symbol (Optional)
+    success: "✔️"
+    # Failure confirmation reaction symbol (Optional)
+    fail: "❗"
+  # Relay media replies from management room to original sender directly
+  # When set to true, management room will send back media replies to original sender
+  # When set to false, media replies will not be sent back to original sender because
+  # we can't normally prefix `!reply` in the message body
+  # (Optional, default: false)
+  relay_management_media: false
+
+storage:
+  # The database connection string
+  # For SQLite3, this would look like:
+  #     database: "sqlite://bot.db"
+  # For Postgres, this would look like:
+  #     database: "postgres://username:password@localhost/dbname?sslmode=disable"
+  database: "sqlite://bot.db"
+  # The path to a directory for internal bot storage
+  # containing encryption keys, sync tokens, etc.
+  store_path: "./store"
+
+# Logging setup
+logging:
+  # Logging level
+  # Allowed levels are 'INFO', 'WARNING', 'ERROR', 'DEBUG' where DEBUG is most verbose
+  # NOTE! DEBUG will print out all messages to the logs which could be a bad privacy
+  # thing - only use it to actually debug!
+  level: INFO
+  # Configure logging to a file
+  file_logging:
+    # Whether logging to a file is enabled
+    enabled: false
+    # The path to the file to log to. May be relative or absolute
+    filepath: bot.log
+  # Configure logging to the console output
+  console_logging:
+    # Whether logging to the console is enabled
+    enabled: true
+  matrix_logging:
+    # Whether logging to Matrix is enabled.
+    # Note! User access token must be specified when using Matrix logging.
+    enabled: false
+    # Room ID
+    # Don't forget to invite the bot to this room.
+    # This can also be the same as the management room, if wanted.
+    room: !logs:example.com
