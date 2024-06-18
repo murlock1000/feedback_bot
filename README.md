@@ -70,7 +70,13 @@ systemctl start supportbot.service
 systemctl status supportbot.service
 ```
 
-
+CREATE DATABASE "fb_db"
+    WITH
+    OWNER = feedbackbot
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
 
 ## Running
 
