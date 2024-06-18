@@ -29,3 +29,6 @@ config.yaml
 
 # Log files
 *.log
+
+# Docker files
+.env
