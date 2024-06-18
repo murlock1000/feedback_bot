@@ -3,7 +3,7 @@
 # Default values are shown
 
 # The string to prefix messages with to talk to the bot in group chats
-command_prefix: "!middleman"
+command_prefix: "!c"feedback_bot
 
 # Option for ignoring old messages in a room on startup
 ignore_old_messages: False
@@ -27,22 +27,21 @@ matrix:
   # If this device ID already exists, messages will be dropped silently in encrypted rooms
   device_id: ABCDEFGHIJ
   # What to name the logged in device
-  device_name: middleman-bot
+  device_name: feedback_bot
 
-middleman:
+feedback_bot:
   # Management room where proxied messages are sent and where actions are taken.
-  # Can be an alias or room ID. Middleman must be able to join it on startup.
+  # Can be an alias or room ID. Feedback bot must be able to join it on startup.
   management_room: "!1234567:example.com"
   # Anonymous senders
   # If set to true, relayed messages to management room will not contain
   # any sender information.
   anonymise_senders: false
-  # Welcome message which is sent to anyone inviting Middleman to a room.
+  # Welcome message which is sent to anyone inviting Feedback bot to a room.
   # Comment out to disable sending any message.
   welcome_message: |
-    Hello! I'm Middleman, a bot. I will relay your message forward to the maintainers of this
-    bot. When they reply, you will see the message here. Ps. Sorry, images are not currently
-    supported, text only please!
+    Hello! I'm Feedback Bot. I will relay your message forward to the maintainers of this
+    bot. When they reply, you will see the message here.
   # Operate in "mentions only" for rooms that look like non-direct messages,
   # This is based on the nio "is_named" logic, ie a room is a named room if it has
   # 1) an alias or 2) a name. Direct messages often don't have names, they are
@@ -52,7 +51,7 @@ middleman:
   # List of rooms to only relay messages from when explicitly mentioned
   # Any rooms here (alias or ID) will have messages relayed to the management
   # room only if the bot is mentioned in the message. This allows joining the bot
-  # to rooms with a large amount of messages for support needs, for example.
+  # to rooms with a large amount of messages for feedback needs, for example.
   # When "mention_only_always_for_named" is set to true, this has no effect.
   mention_only_rooms: []
   # Reply confirmation with reaction (Optional)

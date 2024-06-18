@@ -3,12 +3,11 @@ import asyncio
 import sys
 
 # noinspection PyPackageRequirements
-import aiolog
 
-from middleman.config import Config
+from feedback_bot.config import Config
 
 try:
-    from middleman import main
+    from feedback_bot import main
 
     # Read config file
 
@@ -19,9 +18,7 @@ try:
         config_path = "config.yaml"
     config = Config(config_path)
 
-    aiolog.start()
-
     # Run the main function of the bot
-    asyncio.get_event_loop().run_until_complete(main.main(config)).run_until_complete(aiolog.stop())
+    asyncio.get_event_loop().run_until_complete(main.main(config))
 except ImportError as e:
-    print("Unable to import middleman.main:", e)
+    print("Unable to import feedback_bot.main:", e)

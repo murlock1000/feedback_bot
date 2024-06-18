@@ -8,6 +8,8 @@
 env/
 env3/
 .env/
+venv/
+.venv/
 
 # Bot local files
 *.db
